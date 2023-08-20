@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+const byDefault = {
+  name: "Ejemplo",
+  price: 12,
+  inStorage: 12,
+}
 
 @Component({
   selector: 'app-basic-page',
@@ -7,7 +13,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styles: [
   ]
 })
-export class BasicPageComponent {
+export class BasicPageComponent implements OnInit {
 
   // public myForm: FormGroup = new FormGroup({
   //   name: new FormControl("",),
@@ -16,16 +22,19 @@ export class BasicPageComponent {
   // })
 
   public myForm: FormGroup = this.fb.group({
-    name: [""],
-    price: [0],
-    inStorage: [0]
+    name: ["", [Validators.required, Validators.minLength(3)]],
+    price: [0, [Validators.required, Validators.min(0)]],
+    inStorage: [0, [Validators.required, Validators.min(0)]]
   })
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) { }
 
+  ngOnInit(): void {
+    this.myForm.reset(byDefault)
   }
 
-  onSave():void {
+  onSave(): void {
+    if (this.myForm.invalid) return
     console.log(this.myForm.value)
   }
 

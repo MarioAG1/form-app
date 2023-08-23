@@ -28,11 +28,8 @@ export class SwitchesPageComponent implements OnInit {
   constructor(private fb: FormBuilder) {
 
   }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 
-  OnInit() {
+  ngOnInit(): void {
     this.myForm.reset(this.person)
   }
 

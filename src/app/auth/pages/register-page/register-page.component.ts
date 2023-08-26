@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorsService } from 'src/app/shared/services/validators.service';
-import { EmailValidatorService } from 'src/app/shared/validators/email-validator.service';
+import { EmailValidator } from 'src/app/shared/validators/email-validator.service';
 
 @Component({
   selector: 'app-register-page',
@@ -18,9 +18,13 @@ export class RegisterPageComponent {
     username: ["", [Validators.required, this.validatorsService.cantBeStrider]],
     password: ["", [Validators.required, Validators.minLength(6)]],
     password2: ["", [Validators.required]]
+  }, {
+    validators: [
+      this.validatorsService.isFieldOneEqualFieldTwo("password","password2")
+    ]
   })
 
-  constructor(private fb: FormBuilder, private validatorsService: ValidatorsService, private emailValidator: EmailValidatorService) {
+  constructor(private fb: FormBuilder, private validatorsService: ValidatorsService, private emailValidator: EmailValidator) {
 
   }
 
